@@ -1,0 +1,33 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build-backend-vscode",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/TimeSmart.sln"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "run-backend",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "run",
+        "--project",
+        "${workspaceFolder}/Timesheet.Web/Timesheet.Web.csproj"
+      ]
+    },
+    {
+      "label": "test-api",
+      "command": "curl",
+      "type": "shell",
+      "args": [
+        "http://localhost:5000/api/timesheet/health"
+      ]
+    }
+  ]
+}

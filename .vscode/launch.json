@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Backend API (Debug)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-backend-vscode",
+      "program": "${workspaceFolder}/Timesheet.Web/bin/Debug/net8.0/Timesheet.Web.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/Timesheet.Web",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      }
+    }
+  ]
+}

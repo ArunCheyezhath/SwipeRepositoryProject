@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "timesmart-frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "C:/Users/200848/TimeSmart/TimeSmart_Frontend", "--", "--port", "3033", "--strictPort"],
+      "port": 3033
+    }
+  ]
+}
