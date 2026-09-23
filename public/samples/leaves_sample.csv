@@ -1,0 +1,4 @@
+EmployeeId,Date,LeaveType,Status
+EMP001,2025-09-18,Casual Leave,Approved
+EMP001,2025-09-25,Sick Leave,Approved
+EMP002,2025-09-10,Casual Leave,Pending
