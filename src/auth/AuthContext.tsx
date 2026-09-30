@@ -15,6 +15,7 @@ interface AuthContextValue {
   error: string
   login: (username: string, password: string) => Promise<boolean>
   loginWithSso: () => Promise<boolean>
+  loginWithGoogle: (googleToken: string) => Promise<boolean>
   logout: () => void
 }
 
@@ -78,8 +79,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  const loginWithGoogle = async (googleToken: string) => {
+    setError('')
+    try {
+      const res = await axios.post(`${API_BASE_URL}/api/auth/google-login`, { idToken: googleToken })
+      applySession(res.data)
+      return true
+    } catch (err: any) {
+      setError(err.response?.data?.message ?? 'Google sign-in failed')
+      return false
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ employee, isAuthenticated: !!employee, isLoading, error, login, loginWithSso, logout }}>
+    <AuthContext.Provider value={{ employee, isAuthenticated: !!employee, isLoading, error, login, loginWithSso, loginWithGoogle, logout }}>
       {children}
     </AuthContext.Provider>
   )
