@@ -33,26 +33,52 @@ const BANNER_THEME: Record<DayPeriod, { bg: string; heading: string; body: strin
 function SkylineIllustration({ period }: { period: DayPeriod }) {
   if (period === 'night') {
     return (
-      <svg viewBox="0 0 220 110" className="hidden md:block absolute right-0 bottom-0 w-48 h-20 opacity-90 z-0">
-        <circle cx="60" cy="14" r="1.5" fill="#E0E7FF" />
-        <circle cx="90" cy="8" r="1" fill="#E0E7FF" />
-        <circle cx="130" cy="12" r="1.2" fill="#E0E7FF" />
-        <circle cx="175" cy="52" r="12" fill="#E0E7FF" />
-        <path d="M0 90 L45 45 L75 70 L110 30 L150 65 L220 40 L220 110 L0 110 Z" fill="#3730A3" opacity="0.6" />
-        <path d="M0 100 L60 60 L100 85 L140 55 L220 80 L220 110 L0 110 Z" fill="#312E81" opacity="0.8" />
+      <svg viewBox="0 0 240 120" className="hidden md:block absolute right-0 bottom-0 w-56 h-24 opacity-95 z-0">
+        {/* Moon with glow */}
+        <defs>
+          <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#E0E7FF" stopOpacity="0.4" />
+            <stop offset="100%" stopColor="#E0E7FF" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+        <circle cx="180" cy="30" r="24" fill="url(#moonGlow)" />
+        <circle cx="180" cy="30" r="16" fill="#E0E7FF" />
+        {/* Stars */}
+        <circle cx="60" cy="16" r="1.5" fill="#E0E7FF" opacity="0.9" />
+        <circle cx="100" cy="8" r="1" fill="#E0E7FF" opacity="0.7" />
+        <circle cx="140" cy="20" r="1.2" fill="#E0E7FF" opacity="0.8" />
+        <circle cx="220" cy="12" r="1" fill="#E0E7FF" opacity="0.6" />
+        {/* Mountains */}
+        <path d="M0 100 Q50 50 100 80 T200 70 L240 100 L240 120 L0 120 Z" fill="#3730A3" opacity="0.7" />
+        <path d="M0 105 Q60 70 120 90 T240 85 L240 120 L0 120 Z" fill="#312E81" opacity="0.85" />
       </svg>
     )
   }
 
   const sunColor = period === 'morning' ? '#FDE68A' : period === 'afternoon' ? '#FCD34D' : '#FB923C'
+  const sunGlow = period === 'morning' ? '#FEF08A' : period === 'afternoon' ? '#FEF3C7' : '#FED7AA'
   const nearMountain = period === 'evening' ? '#FDBA74' : '#C7D2FE'
   const farMountain = period === 'evening' ? '#F97316' : '#A5B4FC'
+  const midMountain = period === 'evening' ? '#FB923C' : '#E0E7FF'
 
   return (
-    <svg viewBox="0 0 220 110" className="hidden md:block absolute right-0 bottom-0 w-48 h-20 opacity-90 z-0">
-      <circle cx="175" cy="52" r="16" fill={sunColor} />
-      <path d="M0 90 L45 45 L75 70 L110 30 L150 65 L220 40 L220 110 L0 110 Z" fill={nearMountain} opacity="0.7" />
-      <path d="M0 100 L60 60 L100 85 L140 55 L220 80 L220 110 L0 110 Z" fill={farMountain} opacity="0.8" />
+    <svg viewBox="0 0 240 120" className="hidden md:block absolute right-0 bottom-0 w-56 h-24 opacity-95 z-0">
+      <defs>
+        {/* Sun glow effect */}
+        <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor={sunColor} stopOpacity="0.3" />
+          <stop offset="100%" stopColor={sunColor} stopOpacity="0" />
+        </radialGradient>
+      </defs>
+
+      {/* Sun with glow */}
+      <circle cx="180" cy="40" r="32" fill="url(#sunGlow)" />
+      <circle cx="180" cy="40" r="20" fill={sunColor} />
+
+      {/* Layered mountains with smooth curves */}
+      <path d="M0 110 Q40 60 80 95 Q120 65 160 90 Q200 55 240 85 L240 120 L0 120 Z" fill={farMountain} opacity="0.6" />
+      <path d="M0 105 Q50 70 100 100 Q140 75 180 95 Q210 65 240 95 L240 120 L0 120 Z" fill={nearMountain} opacity="0.8" />
+      <path d="M0 108 Q30 85 70 100 Q110 80 150 102 Q190 78 240 100 L240 120 L0 120 Z" fill={midMountain} opacity="0.5" />
     </svg>
   )
 }
