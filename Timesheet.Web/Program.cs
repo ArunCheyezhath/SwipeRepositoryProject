@@ -2,11 +2,21 @@ using System.Text;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Driver;
 using Timesheet.Domain.Interfaces;
+using Timesheet.Infrastructure.Data;
 using Timesheet.Infrastructure.Providers;
+using Timesheet.Infrastructure.Repositories;
 using Timesheet.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// MongoDB Configuration
+var mongoConnectionString = builder.Configuration.GetConnectionString("MongoDB") ?? "mongodb://localhost:27017/TimeSmart";
+var mongoClient = new MongoClient(mongoConnectionString);
+var mongoDatabase = mongoClient.GetDatabase("TimeSmart");
+builder.Services.AddSingleton(mongoDatabase);
+builder.Services.AddScoped<IMongoDbService, MongoDbService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -52,10 +62,22 @@ builder.Services.AddSingleton<IHolidayProvider, InMemoryHolidayProvider>();
 builder.Services.AddSingleton<ISettingsProvider, InMemorySettingsProvider>();
 builder.Services.AddSingleton<IAuthService, AuthService>();
 
+// Register MongoDB Repositories
+builder.Services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
+builder.Services.AddScoped<ILeaveBalanceRepository, LeaveBalanceRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<ISettingsRepository, SettingsRepository>();
+builder.Services.AddScoped<IAuditLogRepository, AuditLogRepository>();
+builder.Services.AddScoped<IAnalyticsRepository, AnalyticsRepository>();
+
 // Register services
 builder.Services.AddHttpClient();
 builder.Services.AddScoped<ITimesheetCalculationService, TimesheetCalculationService>();
 builder.Services.AddScoped<IFileImportService, CsvImportService>();
+builder.Services.AddScoped<ILeaveManagementService, LeaveManagementService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
+builder.Services.AddScoped<IAuditService, AuditService>();
 
 // JWT auth
 var jwtKey = builder.Configuration["Jwt:Key"]!;
