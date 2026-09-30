@@ -1,6 +1,7 @@
 namespace Timesheet.Infrastructure.Repositories;
 
 using MongoDB.Driver;
+using Microsoft.Extensions.Logging;
 using Timesheet.Domain.Interfaces;
 using Timesheet.Domain.Models;
 

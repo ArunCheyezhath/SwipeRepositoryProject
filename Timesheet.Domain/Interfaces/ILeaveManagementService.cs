@@ -1,5 +1,7 @@
 namespace Timesheet.Domain.Interfaces;
 
+using Timesheet.Domain.Models;
+
 public interface ILeaveManagementService
 {
     Task<LeaveRequest> RequestLeaveAsync(string employeeId, DateTime startDate, DateTime endDate, string leaveType, string reason);
@@ -16,7 +18,7 @@ public interface ILeaveManagementService
 
 public interface INotificationService
 {
-    Task<Notification> CreateNotificationAsync(string employeeId, string title, string message, NotificationType type, string actionUrl = null);
+    Task<Notification> CreateNotificationAsync(string employeeId, string title, string message, NotificationType type, string? actionUrl = null);
     Task<List<Notification>> GetUnreadNotificationsAsync(string employeeId);
     Task<List<Notification>> GetNotificationHistoryAsync(string employeeId, int limit = 50);
     Task MarkAsReadAsync(string notificationId);
@@ -39,17 +41,17 @@ public interface IAnalyticsService
     Task<Dictionary<string, object>> GetDashboardInsightsAsync(string employeeId);
 }
 
-public interface ILogger
+public interface ICustomLogger
 {
-    void LogInfo(string message, Dictionary<string, object> metadata = null);
-    void LogWarning(string message, Dictionary<string, object> metadata = null);
-    void LogError(string message, Exception exception = null, Dictionary<string, object> metadata = null);
-    void LogDebug(string message, Dictionary<string, object> metadata = null);
+    void LogInfo(string message, Dictionary<string, object>? metadata = null);
+    void LogWarning(string message, Dictionary<string, object>? metadata = null);
+    void LogError(string message, Exception? exception = null, Dictionary<string, object>? metadata = null);
+    void LogDebug(string message, Dictionary<string, object>? metadata = null);
 }
 
 public interface IAuditService
 {
-    Task LogActionAsync(string employeeId, string action, string entityType, string entityId, object oldValue = null, object newValue = null, string ipAddress = null);
+    Task LogActionAsync(string employeeId, string action, string entityType, string entityId, object? oldValue = null, object? newValue = null, string? ipAddress = null);
     Task<List<AuditLog>> GetAuditTrailAsync(string employeeId, int days = 30);
     Task<List<AuditLog>> GetEntityAuditTrailAsync(string entityType, string entityId);
 }

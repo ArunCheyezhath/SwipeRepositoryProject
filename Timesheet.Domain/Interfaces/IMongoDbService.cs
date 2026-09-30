@@ -1,5 +1,7 @@
 namespace Timesheet.Domain.Interfaces;
 
+using Timesheet.Domain.Models;
+
 public interface IMongoDbService
 {
     Task<T> GetByIdAsync<T>(string id) where T : class;

@@ -1,5 +1,6 @@
 namespace Timesheet.Infrastructure.Services;
 
+using Microsoft.Extensions.Logging;
 using Timesheet.Domain.Interfaces;
 using Timesheet.Domain.Models;
 

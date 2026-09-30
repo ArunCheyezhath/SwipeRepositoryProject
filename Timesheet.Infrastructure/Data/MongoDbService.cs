@@ -1,6 +1,7 @@
 namespace Timesheet.Infrastructure.Data;
 
 using MongoDB.Driver;
+using Microsoft.Extensions.Logging;
 using Timesheet.Domain.Interfaces;
 
 public class MongoDbService : IMongoDbService
